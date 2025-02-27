@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>pdf-print-proxy sample</title>
+    <script type="module">
+       import { Ppp, PppSelect } from './ppp.js'
+
+        async function main() {
+          const ps = new PppSelect(document.querySelector('select'))
+          try {
+            ps.addPrinterNames(await Ppp.getPrinterNames()) 
+          } catch (e) {
+            console.error(e)
+            alert(e)
+          }
+
+          const btn = document.querySelector("button")
+          btn.addEventListener('click', async (e) => {
+            const r = await fetch("sample.pdf")
+            const pdf = await Ppp.getBase64Pdf(r)
+            let r2
+            try {
+              r2 = await Ppp.print(ps.getSelectedPrinterName(), pdf)
+            } catch (e) {
+            	console.error(e)
+            	alert(e)
+            }
+            console.log(r2)
+            alert('The printing was successful')
+          })
+        }
+       window.main = main
+    </script>
+  </head>
+
+  <body onload="main()">
+    <select></select>
+    <button>print</button>
+  </body>
+</html>

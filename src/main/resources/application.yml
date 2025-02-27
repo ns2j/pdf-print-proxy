@@ -1,0 +1,8 @@
+server:
+  port: 6753
+  error:
+     include-message: always
+
+#logging:
+#  file:
+#    name: app.log
