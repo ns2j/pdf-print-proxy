@@ -10,13 +10,13 @@ Requirements
 * maven
 * Wix toolset(Windows)   
 ```
-maven package
+mvn package
 ```
 then, created installer is in target/jpackage folder.   
 
 ### Run   
 Intall by installer.   
-Windows version is not auto starting. Click pdf-print-proxy icon to start. it appears in SystemTray.      
+Windows version is not auto starting. Click pdf-print-proxy icon to start. It appears in SystemTray.      
 Others version is installed as service.   
 
 ### Confirm   
@@ -35,6 +35,6 @@ then, sample pdf file will print.
 Sample Web Application is [sample folder](sample).   
 
 ### Note
-* Mac version is running as root user. it usualy not specified default printer.   
-* I attempted Windows service. It runs as local system account. it cannot use network printer.
+* Mac version is running as root user. It usualy not specified default printer.   
+* I attempted Windows service. It runs as local system account. It cannot use network printer.
 
