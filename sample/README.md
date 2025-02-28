@@ -19,11 +19,11 @@ mvn spring-boot:run "-Dspring-boot.run.jvmArguments=-Dserver.port=<port>"
 ```   
 or   
 ```
-java -jar target/pdf-print-proxy-<version>-exec.jar
+java -jar target/pdf-print-proxy-sample-<version>-exec.jar
 ```   
 to specify port
 ```
-java -Dserver.port=<port> -jar target/pdf-print-proxy-<version>-exec.jar
+java -Dserver.port=<port> -jar target/pdf-print-proxy-sample-<version>-exec.jar
 ```   
 ## Use
 Access http://localhost:8080 by Web Browser.   
