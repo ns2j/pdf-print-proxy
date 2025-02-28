@@ -27,7 +27,7 @@ curl http://localhost:6753
 shows printer name list.   
 Edit printerName in data.json.
 ```
-curl http://localhost:6753 -d '@data1.json' -H 'Content-Type: application/json'
+curl http://localhost:6753 -d '@data.json' -H 'Content-Type: application/json'
 ```   
 then, sample pdf file will print.   
 
