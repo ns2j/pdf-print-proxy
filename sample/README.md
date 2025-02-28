@@ -26,7 +26,7 @@ to specify port
 java -Dserver.port=<port> -jar target/pdf-print-proxy-sample-<version>-exec.jar
 ```   
 ## Use
-Access http://localhost:8080 by Web Browser.   
+Access http://localhost:8080/sample.html by Web Browser.   
 
 ## Note   
 Sample sources is in [src/main/resources/static](src/main/resources/static).   
