@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ns2j</groupId>
   <artifactId>pdf-print-proxy</artifactId>
-  <version>1.0.15</version>
+  <version>1.0.17</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -116,6 +116,8 @@
           --app-version ${project.version} --main-jar
           ${project.artifactId}-${project.version}-exec.jar
           --win-menu --win-shortcut --icon ${project.build.directory}/classes/icon.ico
+          --add-modules java.base,java.compiler,java.desktop,java.instrument,java.management,java.naming,java.net.http,java.prefs,java.rmi,java.scripting,java.security.jgss,java.sql,jdk.jfr,jdk.unsupported
+          --jlink-options "--no-header-files --no-man-pages --strip-debug"
         </jpackage.args>
       </properties>
       <build>
@@ -162,6 +164,8 @@
           --app-version ${project.version} --main-jar
           ${project.artifactId}-${project.version}-exec.jar
           --launcher-as-service
+          --add-modules java.base,java.compiler,java.desktop,java.instrument,java.management,java.naming,java.net.http,java.prefs,java.rmi,java.scripting,java.security.jgss,java.sql,jdk.jfr,jdk.unsupported
+          --jlink-options "--no-header-files --no-man-pages --strip-debug"
         </jpackage.args>
       </properties>
     </profile>
@@ -181,6 +185,8 @@
           ${project.artifactId}-${project.version}-exec.jar
           --launcher-as-service
           --icon ${project.build.directory}/classes/icon.icns
+          --add-modules java.base,java.compiler,java.desktop,java.instrument,java.management,java.naming,java.net.http,java.prefs,java.rmi,java.scripting,java.security.jgss,java.sql,jdk.jfr,jdk.unsupported
+          --jlink-options "--no-header-files --no-man-pages --strip-debug"
         </jpackage.args>
       </properties>
     </profile>
