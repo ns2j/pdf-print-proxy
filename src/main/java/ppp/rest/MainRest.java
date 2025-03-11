@@ -74,6 +74,7 @@ public class MainRest {
             }
         } else {
             String command = "lpr";
+            printerName = printerName.replace(" ", "_");
             if (existsPrinterName)
                 pb = new ProcessBuilder(command, "-P", printerName, pdf);
             else
