@@ -1,40 +1,53 @@
-# Preview-less printing with Web Application   
-## What is pdf-print-proxy   
-pdf-print-proxy is proxy of command line pdf printing program([PDFtoPrinter.exe](https://mendelson.org/pdftoprinter.html) in Windows, lpr in others).   
-It is installed in local computer. It provides web api. Web Application calls it's api.    
-Supported os is Windows, Mac and Linux.   
+# Preview-less Printing from a Web Application
 
-## Build   
-Requirements   
-* JDK >= 21. Deffine JAVA_HOME corretly.
-* maven
-* Wix toolset(Windows)   
+## What is pdf-print-proxy
+
+pdf-print-proxy is a proxy for command-line PDF printing programs ([PDFtoPrinter.exe](https://mendelson.org/pdftoprinter.html) on Windows, `lpr` on other platforms).
+It is installed on the local computer and provides a web API, which your web application can call.
+Supported operating systems: Windows, macOS, and Linux.
+
+## Build
+
+Requirements:
+
+- JDK 21 or later (set `JAVA_HOME` correctly)
+- Maven
+- WiX Toolset (Windows only)
+
 ```
 mvn package
 ```
-then, created installer is in target/jpackage folder.   
 
-### Run   
-Intall by installer.   
-Windows version is not auto starting. Click pdf-print-proxy icon to start. It appears in SystemTray.      
-Others version is installed as service.   
+The installer will be created in the `target/jpackage` folder.
 
-### Confirm   
-Confirming is using curl(curl.exe in Windows)
+## Run
+
+Install the application using the installer.
+
+- Windows: The application does not start automatically. Click the pdf-print-proxy icon to start it; it appears in the system tray.
+- macOS and Linux: The application is installed as a service.
+
+## Confirm
+
+Use curl (`curl.exe` on Windows) to confirm that it works.
+
 ```
 curl http://localhost:6753
-```   
-shows printer name list.   
-Edit printerName in data.json.
+```
+
+This returns a list of printer names. Set `printerName` in `data.json` to one of them, then run:
+
 ```
 curl http://localhost:6753 -d '@data.json' -H 'Content-Type: application/json'
-```   
-then, sample pdf file will print.   
+```
 
-### Sample Web Application   
-Sample Web Application is [sample folder](sample).   
+The sample PDF file will be printed.
 
-### Note
-* Mac version is running as root user. It usualy not specified default printer.   
-* I attempted Windows service. It runs as local system account. It cannot use network printer.
+## Sample Web Application
 
+A sample web application is available in the [sample folder](https://github.com/ns2j/pdf-print-proxy/blob/main/sample).
+
+## Notes
+
+- The macOS version runs as the root user, so a default printer is usually not set.
+- I tried running it as a Windows service, but a service runs under the local system account, which cannot use network printers.
