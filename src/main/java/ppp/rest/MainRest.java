@@ -74,11 +74,12 @@ public class MainRest {
             }
         } else {
             String command = "lpr";
-            printerName = printerName.replace(" ", "_");
-            if (existsPrinterName)
+            if (existsPrinterName) {
+                printerName = printerName.replace(" ", "_");
                 pb = new ProcessBuilder(command, "-P", printerName, pdf);
-            else
+            } else {
                 pb = new ProcessBuilder(command, pdf);
+            }
         }
 
         pb.redirectErrorStream(true);
@@ -88,33 +89,36 @@ public class MainRest {
     @PostMapping
     public ResponseEntity<String> index(@RequestBody PrintData printData) throws IOException, InterruptedException {
         Path pdfPath = Files.createTempFile("ppp" + System.currentTimeMillis(), ".pdf");
-        Files.write(pdfPath, printData.pdf);
+        try {
+            Files.write(pdfPath, printData.pdf);
 
-        ProcessBuilder pb = getProcessBuilder(printData.printerName, pdfPath);
-        Process p = pb.start();
+            ProcessBuilder pb = getProcessBuilder(printData.printerName, pdfPath);
+            Process p = pb.start();
 
-        StringBuilder sb = new StringBuilder();
-        if (!isWindows()) {
-            try (BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.defaultCharset()))) {
-                String line;
-                while ((line = r.readLine()) != null) {
-                    sb.append(line + "\n");
+            StringBuilder sb = new StringBuilder();
+            if (!isWindows()) {
+                try (BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.defaultCharset()))) {
+                    String line;
+                    while ((line = r.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
                 }
             }
+            //p.waitFor(30, TimeUnit.SECONDS);
+            p.waitFor();
+            p.children().forEach(c -> c.destroy());
+            p.destroy();
+
+            int exitCode = p.exitValue();
+            sb.append("exit code: " + exitCode + "\n");
+
+
+            if (exitCode != 0)
+                throw new ResponseStatusException(HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), sb.toString());
+
+            return ResponseEntity.ok(sb.toString());
+        } finally {
+            Files.delete(pdfPath);
         }
-        //p.waitFor(30, TimeUnit.SECONDS);
-        p.waitFor();
-        p.children().forEach(c -> c.destroy());
-        p.destroy();
-
-        int exitCode = p.exitValue();
-        sb.append("exit code: " + exitCode + "\n");
-
-        Files.delete(pdfPath);
-
-        if (exitCode != 0)
-            throw new ResponseStatusException(HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), sb.toString());
-
-        return ResponseEntity.ok(sb.toString());
     }
 }
